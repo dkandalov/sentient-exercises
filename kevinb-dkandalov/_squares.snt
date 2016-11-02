@@ -1,0 +1,25 @@
+array4<array4<int>> square;
+trSquare = square.transpose;
+
+rows = square;
+columns = [trSquare[0], trSquare[1], trSquare[2]];
+diagonals = [
+  [square[0][0], square[1][1], square[2][2]],
+  [square[0][2], square[1][1], square[2][0]]
+];
+
+int sum;
+function^ addUpToSum(numbers){ return numbers.sum == sum; };
+
+# invariant sum == 51;
+invariant rows.all?(function(row){
+  return row.all?(function(it){ return it > 0; });
+});
+invariant rows.all?(*addUpToSum);
+invariant columns.all?(*addUpToSum);
+invariant diagonals.all?(*addUpToSum);
+
+int n;
+invariant square[1][1] == n * n;
+
+expose sum, square, n;

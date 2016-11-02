@@ -1,0 +1,16 @@
+array13<int12> a;
+
+function^ sq(i) {
+  return a[i] * a[i];
+};
+
+invariant a.all?(function(it){ return it > 0; });
+
+# upto max = (arraysize - 5) / 2;
+0.upto(4, function^ (i) {
+  i = i * 2;
+  invariant (i).sq + (i + 1).sq == (i + 2).sq;
+  invariant a[i] > a[i + 1], a[i] < a[i + 2];
+});
+
+expose a;

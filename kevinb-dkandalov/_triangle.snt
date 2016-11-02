@@ -1,0 +1,37 @@
+function main_basic() {
+  int a, b, c;
+  invariant c * c == a * a + b * b;
+  invariant a > 0, b > 0, c > 0, c < 30;
+  expose a, b, c;
+};
+
+function main_with_array() {
+  function pow2(n) { return n * n; };
+  function pow3(n) { return n * n * n; };
+
+  array3<int12> triangle;
+  invariant triangle.all?(function(it){ return it > 0; });
+  invariant (triangle[0] >= triangle[1]) && (triangle[1] >= triangle[2]);
+  invariant triangle[0].pow2 == triangle[1].pow2 + triangle[2].pow2;
+  invariant triangle[0] < 30;
+  expose triangle;
+};
+
+function main_spiral() {
+  function pow2(n) { return n * n; };
+
+  array5<int> t;
+  invariant t.all?(function(it){ return it > 0; });
+  t.eachSlice(2, function^(slice, indexes) {
+    ab = t.bounds?(indexes[1]) ? t[indexes[0]].pow2 + t[indexes[1]].pow2 : 0;
+    #c = t.bounds?(indexes[1]) ? t[indexes.last + 1].pow2 : 0;
+    #invariant ab == c;
+  });
+
+  expose t;
+};
+
+# main_basic();
+# main_with_array();
+main_spiral();
+#test();

@@ -1,0 +1,11 @@
+int a, b, c;
+
+invariant a * a + b * b == c * c;
+
+invariant c > 0, a > 0, b > 0;
+
+invariant c < 30;
+invariant a < b, b < c;
+
+
+expose a, b, c;

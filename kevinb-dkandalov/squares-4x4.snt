@@ -1,0 +1,27 @@
+array4<array4<int>> s;
+
+array16<int> values;
+
+0.upto(15, function^(i) {
+  invariant values[i] == s[i / 4][i % 4];
+});
+
+invariant values.uniq?;
+invariant values.all?(function(it) { return it > 0; });
+
+int maxSum;
+int aSum;
+# aSum = 15;
+rows = s;
+cols = s.transpose;
+diagonals = [
+  [s[0][0], s[1][1], s[2][2], s[3][3]],
+  [s[0][3], s[1][2], s[2][1], s[3][0]]
+];
+
+invariant rows.all?(function^(row){ return row.sum == aSum; });
+invariant cols.all?(function^(row){ return row.sum == aSum; });
+invariant diagonals.all?(function^(row){ return row.sum == aSum; });
+
+invariant aSum <= maxSum;
+expose aSum, maxSum, s, values;

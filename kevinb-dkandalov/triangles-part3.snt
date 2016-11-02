@@ -1,0 +1,11 @@
+int32 a, b, c;
+
+invariant a * a * a + b * b * b == c * c * c;
+
+invariant c > 0, a > 0, b > 0;
+
+invariant c > 10000;
+invariant a < b, b < c;
+
+
+expose a, b, c;

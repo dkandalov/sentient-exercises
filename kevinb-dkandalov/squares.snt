@@ -1,0 +1,26 @@
+array3<array3<int>> s;
+
+values = [0, 0, 0, 0, 0, 0, 0 ,0, 0].map(function^ (el, i) {
+  return s[i % 3][i / 3];
+});
+
+invariant values.uniq?;
+invariant values.all?(function(it) { return it > 0; });
+
+int aSum;
+# aSum = 15;
+rows = s;
+cols = s.transpose;
+diagonals = [
+  [s[0][0], s[1][1], s[2][2]],
+  [s[0][2], s[1][1], s[2][0]]
+];
+
+invariant rows.all?(function^(row){ return row.sum == aSum; });
+invariant cols.all?(function^(row){ return row.sum == aSum; });
+invariant diagonals.all?(function^(row){ return row.sum == aSum; });
+
+int n;
+invariant s[1][1] == n*n, n != 6, n != -6;
+
+expose s, values;
